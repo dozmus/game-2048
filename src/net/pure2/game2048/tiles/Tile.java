@@ -122,12 +122,12 @@ public final class Tile {
      */
     public void render(Graphics g) {
         // Drawing the tile
-        g.setColor(colours[ColourUtils.TILE_COLOUR_ID]);
+        g.setColor(colours[TileColours.TILE_COLOUR_ID]);
         g.fill(new RoundedRectangle(x + 1, y + 1, sizeX, sizeY, 8));
 
         // Drawing the tile value
         if (value != -1) {
-            g.setColor(colours[ColourUtils.TEXT_COLOUR_ID]);
+            g.setColor(colours[TileColours.TEXT_COLOUR_ID]);
             g.drawString(Integer.toString(value), valRenderPosX, valRenderPosY);
         }
     }
@@ -136,7 +136,7 @@ public final class Tile {
      * Fetches this tiles colours.
      */
     private void fetchColours() {
-        colours = ColourUtils.getColourScheme(value);
+        colours = TileColours.getColourScheme(value);
     }
 
     /**

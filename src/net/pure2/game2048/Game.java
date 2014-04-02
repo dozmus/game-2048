@@ -108,7 +108,7 @@ public final class Game extends BasicGame {
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         // Handles input updates
-        input.handle(gc.getInput());
+        input.handle(gc);
     }
 
     /**
@@ -128,7 +128,7 @@ public final class Game extends BasicGame {
 
         // Rendering the player score
         ui.renderScore(g, gc.isShowingFPS());
-
+        
         // Rendering the game over text
         if (!tiles.canMove()) {
             ui.renderGameOverText(g);

@@ -57,8 +57,13 @@ public final class UserInterface {
      * @param g
      */
     public void renderGameOverText(Graphics g) {
+        // Background rectangle, to make the text clearer
+        g.setColor(new Color(0, 0, 0, 0.5f));
+        g.fill(new Rectangle(128, 100, 300, 40));
+
+        // Text
         g.setColor(Color.white);
-        g.drawString("Game over, your score is: " + game.getScore() + "!", 150, 100);
-        g.drawString("Press r to play again!", 150, 120);
+        g.drawString("Game over, your score is: " + game.getScore() + "!", 130, 100);
+        g.drawString("Press r to play again!", 130, 120);
     }
 }
