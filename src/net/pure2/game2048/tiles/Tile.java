@@ -2,7 +2,7 @@ package net.pure2.game2048.tiles;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 
 /**
  * A game tile.
@@ -121,9 +121,11 @@ public final class Tile {
      * @param g
      */
     public void render(Graphics g) {
+        // Drawing the tile
         g.setColor(colours[ColourUtils.TILE_COLOUR_ID]);
-        g.fill(new Rectangle(x, y, sizeX, sizeY));
+        g.fill(new RoundedRectangle(x + 1, y + 1, sizeX, sizeY, 8));
 
+        // Drawing the tile value
         if (value != -1) {
             g.setColor(colours[ColourUtils.TEXT_COLOUR_ID]);
             g.drawString(Integer.toString(value), valRenderPosX, valRenderPosY);
@@ -141,7 +143,7 @@ public final class Tile {
      * Calculates this tiles value render position.
      */
     private void calcValRenderPos() {
-        valRenderPosX = x + sizeX / 2 - Integer.toString(value).length() * 2;
+        valRenderPosX = x + sizeX / 2 - Integer.toString(value).length() * 3;
         valRenderPosY = y + sizeY / 2 - 8;
     }
     
