@@ -5,7 +5,6 @@ import net.pure2.game2048.tiles.TileSet;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -27,13 +26,14 @@ public final class Game extends BasicGame {
         System.setProperty("org.lwjgl.librarypath",
                 new File(new File(System.getProperty("user.dir"), "lib/natives"),
                         LWJGLUtil.getPlatformName()).getAbsolutePath());
-        System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
+        System.setProperty("net.java.games.input.librarypath",
+                System.getProperty("org.lwjgl.librarypath"));
         
         // Creating a game container
         AppGameContainer gc = new AppGameContainer(new Game("2048"));
 
         // Graphics options
-        gc.setDisplayMode(510, 510, false);
+        gc.setDisplayMode(514, 514, false);
         gc.setTargetFrameRate(60);
         gc.setShowFPS(false);
         gc.setAlwaysRender(true);
@@ -44,9 +44,30 @@ public final class Game extends BasicGame {
         gc.start();
     }
 
-    private InputHandler inputHandler;
+    /**
+     * User Input handler.
+     */
+    private InputHandler input;
+    
+    /**
+     * The UserInterface renderer.
+     */
+    private UserInterface ui;
+    
+    /**
+     * Tile set.
+     */
     private TileSet tiles;
+    
+    /**
+     * Current score.
+     */
     private int score = 0;
+    
+    /**
+     * Best score.
+     */
+    private int bestScore = 0;
 
     /**
      * Constructs a new Game.
@@ -66,7 +87,10 @@ public final class Game extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         // Initialises the InputHandler
-        inputHandler = new InputHandler(this);
+        input = new InputHandler(this);
+        
+        // Initialises the UserInterface renderer
+        ui = new UserInterface(this);
 
         // Initialises and creates the tile set
         tiles = new TileSet(this, 4, 4);
@@ -84,7 +108,7 @@ public final class Game extends BasicGame {
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         // Handles input updates
-        inputHandler.handle(gc.getInput());
+        input.handle(gc.getInput());
     }
 
     /**
@@ -96,46 +120,31 @@ public final class Game extends BasicGame {
      */
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
+        // Game background
+        ui.renderBackground(gc, g);
+        
         // Renders the tile set
         tiles.render(g);
 
         // Rendering the player score
-        renderScore(g, gc.isShowingFPS());
+        ui.renderScore(g, gc.isShowingFPS());
 
         // Rendering the game over text
         if (!tiles.canMove()) {
-            renderGameOverText(g);
+            ui.renderGameOverText(g);
         }
     }
 
     /**
-     * Renders the player's score.
-     *
-     * @param g
-     * @param showingFps whether or not the fps display is enabled
-     */
-    private void renderScore(Graphics g, boolean showingFps) {
-        int y = showingFps ? 30 : 5;
-        
-        g.setColor(Color.white);
-        g.drawString("Score: " + score, 8, y);
-    }
-
-    /**
-     * Renders the game over text.
-     *
-     * @param g
-     */
-    private void renderGameOverText(Graphics g) {
-        g.setColor(Color.white);
-        g.drawString("Game over, your score is: " + score + "!", 150, 100);
-        g.drawString("Press r to play again!", 150, 120);
-    }
-
-    /**
-     * Resets the current game.
+     * Resets the current game and updates the best score is necessary.
      */
     public void reset() {
+        // Updating the best score
+        if (score > bestScore) {
+            bestScore = score;
+        }
+        
+        // Resetting the game state
         setScore(0);
         getTiles().populate();
         getTiles().insertRandomTile();
@@ -148,6 +157,15 @@ public final class Game extends BasicGame {
      */
     public TileSet getTiles() {
         return tiles;
+    }
+    
+    /**
+     * Gets the current score.
+     * 
+     * @return score
+     */
+    public int getScore() {
+        return score;
     }
 
     /**
@@ -166,5 +184,14 @@ public final class Game extends BasicGame {
      */
     public void addScore(int score) {
         this.score += score;
+    }
+    
+    /**
+     * Gets the current best score.
+     * 
+     * @return best score
+     */
+    public int getBestScore() {
+        return bestScore;
     }
 }
