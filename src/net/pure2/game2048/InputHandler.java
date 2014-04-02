@@ -1,6 +1,7 @@
 package net.pure2.game2048;
 
 import net.pure2.game2048.tiles.TileSet.Direction;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
 /**
@@ -37,17 +38,25 @@ public final class InputHandler {
     /**
      * Handles user the captured user Input.
      *
-     * @param input captured input state
+     * @param gc GameContainer
      */
-    public void handle(Input input) {
+    public void handle(GameContainer gc) {
         // Checking if the input delay has been met
         if (System.currentTimeMillis() - lastInput < INPUT_DELAY) {
             return;
         }
         
+        // Fetching the current input state
+        Input input = gc.getInput();
+        
         // Resetting the board
         if (input.isKeyDown(Input.KEY_R)) {
             game.reset();
+        }
+        
+        // Display FPS toggle
+        if (input.isKeyDown(Input.KEY_F)) {
+            gc.setShowFPS(!gc.isShowingFPS());
         }
 
         // Checking if the player can move

@@ -7,7 +7,7 @@ import org.newdawn.slick.Color;
  *
  * @author Pure_ <mail@pure2.net>
  */
-public final class ColourUtils {
+public final class TileColours {
 
     /**
      * The id for the tile background colour.
@@ -35,57 +35,57 @@ public final class ColourUtils {
                 break;
                 
             case 2:
-                colours[TILE_COLOUR_ID] = new Color(150, 158, 255);
+                colours[TILE_COLOUR_ID] = new Color(152, 216, 250);
                 colours[TEXT_COLOUR_ID] = new Color(0, 0, 0);
                 break;
                 
             case 4:
-                colours[TILE_COLOUR_ID] = new Color(99, 11, 255);
-                colours[TEXT_COLOUR_ID] = new Color(102, 250, 176);
+                colours[TILE_COLOUR_ID] = new Color(126, 208, 252);
+                colours[TEXT_COLOUR_ID] = new Color(16, 52, 173);
                 break;
                 
             case 8:
-                colours[TILE_COLOUR_ID] = new Color(188, 136, 247);
+                colours[TILE_COLOUR_ID] = new Color(84, 195, 255);
                 colours[TEXT_COLOUR_ID] = new Color(38, 34, 168);
                 break;
                 
             case 16:
-                colours[TILE_COLOUR_ID] = new Color(117, 34, 168);
+                colours[TILE_COLOUR_ID] = new Color(46, 183, 255);
                 colours[TEXT_COLOUR_ID] = new Color(181, 247, 189);
                 break;
                 
             case 32:
-                colours[TILE_COLOUR_ID] = new Color(0, 255, 81);
+                colours[TILE_COLOUR_ID] = new Color(0, 166, 255);
                 colours[TEXT_COLOUR_ID] = new Color(43, 46, 224);
                 break;
                 
             case 64:
-                colours[TILE_COLOUR_ID] = new Color(242, 255, 0);
+                colours[TILE_COLOUR_ID] = new Color(9, 126, 189);
                 colours[TEXT_COLOUR_ID] = new Color(59, 212, 209);
                 break;
                 
             case 128:
-                colours[TILE_COLOUR_ID] = new Color(219, 136, 136);
+                colours[TILE_COLOUR_ID] = new Color(7, 95, 143);
                 colours[TEXT_COLOUR_ID] = new Color(234, 235, 232);
                 break;
-                
+               
             case 256:
-                colours[TILE_COLOUR_ID] = new Color(235, 40, 40);
+                colours[TILE_COLOUR_ID] = new Color(50, 100, 128);
                 colours[TEXT_COLOUR_ID] = new Color(220, 220, 230);
                 break;
                 
             case 512:
-                colours[TEXT_COLOUR_ID] = new Color(118, 0, 173);
+                colours[TEXT_COLOUR_ID] = new Color(181, 126, 222);
                 colours[TEXT_COLOUR_ID] = new Color(240, 223, 93);
                 break;
                 
             case 1024:
-                colours[TEXT_COLOUR_ID] = new Color(179, 36, 7);
-                colours[TEXT_COLOUR_ID] = new Color(220, 222, 222);
+                colours[TEXT_COLOUR_ID] = new Color(159, 63, 232);
+                colours[TEXT_COLOUR_ID] = new Color(66, 12, 133);
                 break;
                 
             case 2048:
-                colours[TILE_COLOUR_ID] = new Color(240, 34, 161);
+                colours[TILE_COLOUR_ID] = new Color(144, 0, 255);
                 colours[TEXT_COLOUR_ID] = new Color(34, 240, 64);
                 break;
         }
