@@ -1,4 +1,4 @@
-package net.pure2.game2048.tiles;
+package net.pure2.game2048.tile;
 
 import java.util.Random;
 import net.pure2.game2048.Game;
@@ -11,12 +11,39 @@ import org.newdawn.slick.Graphics;
  */
 public final class TileSet {
 
+    /**
+     * Random number generator.
+     */
     private final Random rand = new Random();
+    
+    /**
+     * The Game this TileSet is bound to.
+     */
     private final Game game;
+    
+    /**
+     * The tiles.
+     */
     private final Tile[][] tiles;
+    
+    /**
+     * The tile array width.
+     */
     private final int width;
+    
+    /**
+     * The tile array height.
+     */
     private final int height;
+    
+    /**
+     * A tiles width.
+     */
     private int tileWidth = 128;
+    
+    /**
+     * A tiles height.
+     */
     private int tileHeight = 128;
 
     /**
@@ -393,13 +420,7 @@ public final class TileSet {
      * @return tile value
      */
     private int getRandomTileValue() {
-        int val = rand.nextInt(100);
-
-        if (val > 30) {
-            return 2;
-        } else {
-            return 4;
-        }
+        return rand.nextInt(100) > 30 ? 2 : 4;
     }
 
     /**

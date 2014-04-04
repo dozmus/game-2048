@@ -1,7 +1,7 @@
 package net.pure2.game2048;
 
 import java.io.File;
-import net.pure2.game2048.tiles.TileSet;
+import net.pure2.game2048.tile.TileSet;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -15,8 +15,15 @@ import org.newdawn.slick.SlickException;
  * @author Pure_ <mail@pure2.net>
  */
 public final class Game extends BasicGame {
+    
+    /**
+     * Game version.
+     */
+    private static final String VERSION = "v1.0.2";
 
     /**
+     * The application entry-point, initialises and starts the game.
+     * 
      * @param args the command line arguments
      *
      * @throws org.newdawn.slick.SlickException
