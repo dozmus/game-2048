@@ -1,4 +1,4 @@
-package net.pure2.game2048.tiles;
+package net.pure2.game2048.tile;
 
 import org.newdawn.slick.Color;
 
