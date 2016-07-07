@@ -1,4 +1,4 @@
-package net.pure2.game2048.model.tile;
+package notpure.game2048.model.tile;
 
 /**
  * Created by pure on 07/07/2016.

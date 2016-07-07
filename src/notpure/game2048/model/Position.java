@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.pure2.game2048.model;
+package notpure.game2048.model;
 
 /**
  * A position.
