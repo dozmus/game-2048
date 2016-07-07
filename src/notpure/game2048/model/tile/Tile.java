@@ -18,10 +18,11 @@
 
 package notpure.game2048.model.tile;
 
-import notpure.game2048.model.Position;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.RoundedRectangle;
+
+import java.awt.*;
 
 /**
  * A game tile.
@@ -30,25 +31,22 @@ import org.newdawn.slick.geom.RoundedRectangle;
  */
 public final class Tile {
 
-    private final Position pos;
-    private final int sizeY;
-    private final int sizeX;
-    private int valRenderPosX;
-    private int valRenderPosY;
+    private final Point position;
+    private final Dimension size;
+    private int valueRenderPosX;
+    private int valueRenderPosY;
     private int value;
     private boolean combinedThisTurn;
     private Color[] colours;
 
     /**
-     * Constructs a new Tile and calculates related information.
-     *
-     * @param x position x
-     * @param y position y
-     * @param sizeX tile size x
-     * @param sizeY tile size y
+     * Constructs a new Tile and calculates related information, the value is set to -1.
+     * @param x
+     * @param y
+     * @param size
      */
-    public Tile(int x, int y, int sizeX, int sizeY) {
-        this(-1, x, y, sizeX, sizeY);
+    public Tile(int x, int y, Dimension size) {
+        this(-1, x, y, (int)size.getWidth(), (int)size.getHeight());
     }
 
     /**
@@ -57,16 +55,15 @@ public final class Tile {
      * @param value tile value
      * @param x position x
      * @param y position y
-     * @param sizeX tile size x
-     * @param sizeY tile size y
+     * @param width tile width
+     * @param height tile heigt
      */
-    public Tile(int value, int x, int y, int sizeX, int sizeY) {
+    public Tile(int value, int x, int y, int width, int height) {
         this.value = value;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        pos = new Position(x, y);
-        fetchColours();
-        calcValRenderPos();
+        size = new Dimension(width, height);
+        position = new Point(x, y);
+        updateColour();
+        updateRenderPosition();
     }
     
     /**
@@ -83,8 +80,8 @@ public final class Tile {
      */
     public void setValue(int value) {
         this.value = value;
-        fetchColours();
-        calcValRenderPos();
+        updateColour();
+        updateRenderPosition();
     }
 
     /**
@@ -128,8 +125,8 @@ public final class Tile {
      */
     public void reset() {
         value = -1;
-        fetchColours();
-        calcValRenderPos();
+        updateColour();
+        updateRenderPosition();
     }
 
     /**
@@ -139,29 +136,30 @@ public final class Tile {
      */
     public void render(Graphics g) {
         // Drawing the tile
-        g.setColor(colours[TileColours.TILE_COLOUR_ID]);
-        g.fill(new RoundedRectangle(pos.getX() + 1, pos.getY() + 1, sizeX, sizeY, 8));
+        g.setColor(colours[TileColours.TILE_COLOUR_IDX]);
+        g.fill(new RoundedRectangle((int)position.getX() + 1, (int)position.getY() + 1,
+                (int)size.getWidth(), (int)size.getHeight(), 8));
 
-        // Drawing the tile value
+        // Drawing the tile value, if the tile is valid
         if (value != -1) {
-            g.setColor(colours[TileColours.TEXT_COLOUR_ID]);
-            g.drawString(Integer.toString(value), valRenderPosX, valRenderPosY);
+            g.setColor(colours[TileColours.TEXT_COLOUR_IDX]);
+            g.drawString(Integer.toString(value), valueRenderPosX, valueRenderPosY);
         }
     }
 
     /**
-     * Fetches this tiles colours.
+     * Sets this tiles colours.
      */
-    private void fetchColours() {
+    private void updateColour() {
         colours = TileColours.getColourScheme(value);
     }
 
     /**
      * Calculates this tiles value render position.
      */
-    private void calcValRenderPos() {
-        valRenderPosX = pos.getX() + sizeX / 2 - Integer.toString(value).length() * 3;
-        valRenderPosY = pos.getY() + sizeY / 2 - 8;
+    private void updateRenderPosition() {
+        valueRenderPosX = (int)position.getX() + (int)size.getWidth() / 2 - Integer.toString(value).length() * 3;
+        valueRenderPosY = (int)position.getY() + (int)size.getHeight() / 2 - 8;
     }
     
     @Override
@@ -185,6 +183,4 @@ public final class Tile {
     public static boolean canCombine(Tile tile1, Tile tile2) {
         return tile1.isValid() && tile1.getValue() != 1024 && tile1.equals(tile2);
     }
-
-
 }

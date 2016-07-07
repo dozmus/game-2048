@@ -19,7 +19,7 @@
 package notpure.game2048;
 
 import notpure.game2048.model.InputHandler;
-import notpure.game2048.model.tile.TileSet.Direction;
+import notpure.game2048.model.tile.TileGrid.Direction;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;

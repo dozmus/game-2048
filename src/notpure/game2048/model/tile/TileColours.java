@@ -14,14 +14,17 @@ import java.util.Scanner;
 public final class TileColours {
 
     /**
-     * The id for the tile background colour.
+     * The idx for the tile background colour.
      */
-    public static int TILE_COLOUR_ID = 0;
+    public static int TILE_COLOUR_IDX = 0;
 
     /**
-     * The id for the tile text colour.
+     * The idx for the tile text colour.
      */
-    public static int TEXT_COLOUR_ID = 1;
+    public static int TEXT_COLOUR_IDX = 1;
+    /**
+     * A mapping of tile value to colour scheme.
+     */
     private static HashMap<Integer, Color[]> COLOURS = new HashMap<>();
 
     public static void load(InputStream in) {

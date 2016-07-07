@@ -18,6 +18,7 @@
 
 package notpure.game2048.model.tile;
 
+import java.awt.*;
 import java.util.Random;
 import notpure.game2048.Game;
 import org.newdawn.slick.Graphics;
@@ -27,12 +28,12 @@ import org.newdawn.slick.Graphics;
  *
  * @author Pure_
  */
-public final class TileSet {
+public final class TileGrid {
 
     /**
      * Random number generator.
      */
-    private final Random rand = new Random();
+    private static final Random RANDOM = new Random();
     
     /**
      * The Game this TileSet is bound to.
@@ -55,9 +56,9 @@ public final class TileSet {
     private final int height;
 
     /**
-     * A unit tile.
+     * The dimensions of a single tile.
      */
-    private UnitTile unitTile = new UnitTile(128, 128);
+    private Dimension tileDimensions = new Dimension(128, 128);
 
     /**
      * Creates a new TileSet.
@@ -66,7 +67,7 @@ public final class TileSet {
      * @param width tiles width (amount of tiles, x)
      * @param height tiles height(amount of tiles, y)
      */
-    public TileSet(Game game, int width, int height) {
+    public TileGrid(Game game, int width, int height) {
         this.game = game;
         this.width = width;
         this.height = height;
@@ -80,8 +81,7 @@ public final class TileSet {
      * @param height tile height
      */
     public void setTileSize(int width, int height) {
-        unitTile.setWidth(width);
-        unitTile.setHeight(height);
+        tileDimensions.setSize(width, height);
     }
 
     /**
@@ -345,11 +345,11 @@ public final class TileSet {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                tiles[y][x] = new Tile(offsetY, offsetX, unitTile.getWidth(), unitTile.getHeight());
-                offsetX += unitTile.getWidth();
+                tiles[y][x] = new Tile(offsetY, offsetX, tileDimensions);
+                offsetX += tileDimensions.getWidth();
             }
             offsetX = 0;
-            offsetY += unitTile.getHeight();
+            offsetY += tileDimensions.getHeight();
         }
     }
 
@@ -433,7 +433,7 @@ public final class TileSet {
      */
     public void insertRandomTile() {
         Tile[] tiles = getFreeTiles();
-        tiles[rand.nextInt(tiles.length)].setValue(getRandomTileValue());
+        tiles[RANDOM.nextInt(tiles.length)].setValue(getRandomTileValue());
     }
 
     /**
@@ -455,14 +455,14 @@ public final class TileSet {
      * @return tile value
      */
     private int getRandomTileValue() {
-        return rand.nextInt(100) > 30 ? 2 : 4;
+        return RANDOM.nextInt(100) > 30 ? 2 : 4;
     }
 
 
     /**
      * The direction to shift/combine the tiles in.
      *
-     * @author Pure_ <mail@pure2.net>
+     * @author Pure_
      */
     public enum Direction {
 

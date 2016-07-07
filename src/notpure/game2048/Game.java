@@ -21,7 +21,7 @@ package notpure.game2048;
 import java.io.File;
 
 import notpure.game2048.model.tile.TileColours;
-import notpure.game2048.model.tile.TileSet;
+import notpure.game2048.model.tile.TileGrid;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -81,7 +81,7 @@ public final class Game extends BasicGame {
     /**
      * Tile set.
      */
-    private TileSet tiles;
+    private TileGrid tiles;
     
     /**
      * Current score.
@@ -118,7 +118,7 @@ public final class Game extends BasicGame {
         ui = new UserInterface(this);
 
         // Initialises and creates the tile set
-        tiles = new TileSet(this, 4, 4);
+        tiles = new TileGrid(this, 4, 4);
         tiles.populate();
         tiles.insertRandomTile();
     }
@@ -180,7 +180,7 @@ public final class Game extends BasicGame {
      *
      * @return TileSet
      */
-    public TileSet getTiles() {
+    public TileGrid getTiles() {
         return tiles;
     }
     
