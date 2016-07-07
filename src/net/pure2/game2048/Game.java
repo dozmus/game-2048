@@ -1,3 +1,21 @@
+/*
+ * A clone of the popular 2048 game.
+ * Copyright (C) 2016 Pure
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package net.pure2.game2048;
 
 import java.io.File;
@@ -10,22 +28,19 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
- * The Game main-class.
+ * Application main class.
  *
- * @author Pure_ <mail@pure2.net>
+ * @author Pure_
  */
 public final class Game extends BasicGame {
-    
-    /**
-     * Game version.
-     */
+
     private static final String VERSION = "v1.0.2";
+    private static final String WINDOW_TITLE = "game-2048 (" + VERSION + ")";
 
     /**
      * The application entry-point, initialises and starts the game.
      * 
      * @param args the command line arguments
-     *
      * @throws org.newdawn.slick.SlickException
      */
     public static void main(String[] args) throws SlickException {
@@ -37,7 +52,7 @@ public final class Game extends BasicGame {
                 System.getProperty("org.lwjgl.librarypath"));
         
         // Creating a game container
-        AppGameContainer gc = new AppGameContainer(new Game("2048"));
+        AppGameContainer gc = new AppGameContainer(new Game());
 
         // Graphics options
         gc.setDisplayMode(514, 514, false);
@@ -78,11 +93,9 @@ public final class Game extends BasicGame {
 
     /**
      * Constructs a new Game.
-     *
-     * @param title frame title
      */
-    public Game(String title) {
-        super(title);
+    public Game() {
+        super(WINDOW_TITLE);
     }
 
     /**
