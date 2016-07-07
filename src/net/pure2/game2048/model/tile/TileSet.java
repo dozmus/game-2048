@@ -53,16 +53,11 @@ public final class TileSet {
      * The tile array height.
      */
     private final int height;
-    
+
     /**
-     * A tiles width.
+     * A unit tile.
      */
-    private int tileWidth = 128;
-    
-    /**
-     * A tiles height.
-     */
-    private int tileHeight = 128;
+    private UnitTile unitTile = new UnitTile(128, 128);
 
     /**
      * Creates a new TileSet.
@@ -85,8 +80,8 @@ public final class TileSet {
      * @param height tile height
      */
     public void setTileSize(int width, int height) {
-        tileWidth = width;
-        tileHeight = height;
+        unitTile.setWidth(width);
+        unitTile.setHeight(height);
     }
 
     /**
@@ -291,9 +286,9 @@ public final class TileSet {
         }
 
         // Up
-        for (int x = width - 1; x > 0; x--) {
+        for (int x = 0; x < width - 1; x--) {
             for (int y = 0; y < height; y++) {
-                if (Tile.canCombine(tiles[y][x - 1], tiles[y][x])) {
+                if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
                     return true;
                 }
             }
@@ -350,11 +345,11 @@ public final class TileSet {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                tiles[y][x] = new Tile(offsetY, offsetX, tileWidth, tileHeight);
-                offsetX += tileWidth;
+                tiles[y][x] = new Tile(offsetY, offsetX, unitTile.getWidth(), unitTile.getHeight());
+                offsetX += unitTile.getWidth();
             }
             offsetX = 0;
-            offsetY += tileHeight;
+            offsetY += unitTile.getHeight();
         }
     }
 

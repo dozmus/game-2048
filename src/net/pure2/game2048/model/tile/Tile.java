@@ -18,6 +18,7 @@
 
 package net.pure2.game2048.model.tile;
 
+import net.pure2.game2048.model.Position;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -29,8 +30,7 @@ import org.newdawn.slick.geom.RoundedRectangle;
  */
 public final class Tile {
 
-    private final int x;
-    private final int y;
+    private final Position pos;
     private final int sizeY;
     private final int sizeX;
     private int valRenderPosX;
@@ -62,10 +62,9 @@ public final class Tile {
      */
     public Tile(int value, int x, int y, int sizeX, int sizeY) {
         this.value = value;
-        this.x = x;
-        this.y = y;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        pos = new Position(x, y);
         fetchColours();
         calcValRenderPos();
     }
@@ -141,7 +140,7 @@ public final class Tile {
     public void render(Graphics g) {
         // Drawing the tile
         g.setColor(colours[TileColours.TILE_COLOUR_ID]);
-        g.fill(new RoundedRectangle(x + 1, y + 1, sizeX, sizeY, 8));
+        g.fill(new RoundedRectangle(pos.getX() + 1, pos.getY() + 1, sizeX, sizeY, 8));
 
         // Drawing the tile value
         if (value != -1) {
@@ -161,8 +160,8 @@ public final class Tile {
      * Calculates this tiles value render position.
      */
     private void calcValRenderPos() {
-        valRenderPosX = x + sizeX / 2 - Integer.toString(value).length() * 3;
-        valRenderPosY = y + sizeY / 2 - 8;
+        valRenderPosX = pos.getX() + sizeX / 2 - Integer.toString(value).length() * 3;
+        valRenderPosY = pos.getY() + sizeY / 2 - 8;
     }
     
     @Override
@@ -185,5 +184,97 @@ public final class Tile {
      */
     public static boolean canCombine(Tile tile1, Tile tile2) {
         return tile1.isValid() && tile1.getValue() != 1024 && tile1.equals(tile2);
+    }
+
+
+    /**
+     * The class which fetches the colours which are associated with the given tile.
+     *
+     * @author Pure_
+     */
+    public static final class TileColours {
+
+        /**
+         * The id for the tile background colour.
+         */
+        public static int TILE_COLOUR_ID = 0;
+
+        /**
+         * The id for the tile text colour.
+         */
+        public static int TEXT_COLOUR_ID = 1;
+
+        /**
+         * Gets the colour scheme associated with the given value.
+         *
+         * @param value tile value
+         * @return colour scheme
+         */
+        public static Color[] getColourScheme(int value) {
+            Color[] colours = new Color[2];
+
+            switch (value) {
+                case -1:
+                    colours[TILE_COLOUR_ID] = new Color(209, 213, 255);
+                    colours[TEXT_COLOUR_ID] = new Color(0, 0, 0);
+                    break;
+
+                case 2:
+                    colours[TILE_COLOUR_ID] = new Color(152, 216, 250);
+                    colours[TEXT_COLOUR_ID] = new Color(0, 0, 0);
+                    break;
+
+                case 4:
+                    colours[TILE_COLOUR_ID] = new Color(126, 208, 252);
+                    colours[TEXT_COLOUR_ID] = new Color(16, 52, 173);
+                    break;
+
+                case 8:
+                    colours[TILE_COLOUR_ID] = new Color(84, 195, 255);
+                    colours[TEXT_COLOUR_ID] = new Color(38, 34, 168);
+                    break;
+
+                case 16:
+                    colours[TILE_COLOUR_ID] = new Color(46, 183, 255);
+                    colours[TEXT_COLOUR_ID] = new Color(181, 247, 189);
+                    break;
+
+                case 32:
+                    colours[TILE_COLOUR_ID] = new Color(0, 166, 255);
+                    colours[TEXT_COLOUR_ID] = new Color(43, 46, 224);
+                    break;
+
+                case 64:
+                    colours[TILE_COLOUR_ID] = new Color(9, 126, 189);
+                    colours[TEXT_COLOUR_ID] = new Color(59, 212, 209);
+                    break;
+
+                case 128:
+                    colours[TILE_COLOUR_ID] = new Color(7, 95, 143);
+                    colours[TEXT_COLOUR_ID] = new Color(234, 235, 232);
+                    break;
+
+                case 256:
+                    colours[TILE_COLOUR_ID] = new Color(50, 100, 128);
+                    colours[TEXT_COLOUR_ID] = new Color(220, 220, 230);
+                    break;
+
+                case 512:
+                    colours[TEXT_COLOUR_ID] = new Color(181, 126, 222);
+                    colours[TEXT_COLOUR_ID] = new Color(240, 223, 93);
+                    break;
+
+                case 1024:
+                    colours[TEXT_COLOUR_ID] = new Color(159, 63, 232);
+                    colours[TEXT_COLOUR_ID] = new Color(66, 12, 133);
+                    break;
+
+                case 2048:
+                    colours[TILE_COLOUR_ID] = new Color(144, 0, 255);
+                    colours[TEXT_COLOUR_ID] = new Color(34, 240, 64);
+                    break;
+            }
+            return colours;
+        }
     }
 }
