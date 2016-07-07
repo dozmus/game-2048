@@ -16,14 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.pure2.game2048.tile;
+package net.pure2.game2048.model.tile;
 
 import org.newdawn.slick.Color;
 
 /**
  * The class which fetches the colours which are associated with the given tile.
  *
- * @author Pure_ <mail@pure2.net>
+ * @author Pure_
  */
 public final class TileColours {
 

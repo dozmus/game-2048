@@ -18,7 +18,7 @@
 
 package net.pure2.game2048;
 
-import net.pure2.game2048.tile.TileSet.Direction;
+import net.pure2.game2048.model.tile.TileSet.Direction;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 

@@ -19,7 +19,7 @@
 package net.pure2.game2048;
 
 import java.io.File;
-import net.pure2.game2048.tile.TileSet;
+import net.pure2.game2048.model.tile.TileSet;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.pure2.game2048.tile;
+package net.pure2.game2048.model.tile;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
