@@ -19,6 +19,8 @@
 package notpure.game2048;
 
 import java.io.File;
+
+import notpure.game2048.model.tile.TileColours;
 import notpure.game2048.model.tile.TileSet;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
@@ -106,6 +108,9 @@ public final class Game extends BasicGame {
      */
     @Override
     public void init(GameContainer gc) throws SlickException {
+        // Load tile colours
+        TileColours.load(getClass().getResourceAsStream("/notpure/game2048/tile/styles.txt"));
+
         // Initialises the InputHandler
         input = new SimpleInputHandler(this);
         
