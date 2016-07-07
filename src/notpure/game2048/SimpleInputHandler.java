@@ -18,7 +18,9 @@
 
 package notpure.game2048;
 
+import notpure.game2048.model.InputHandler;
 import notpure.game2048.model.tile.TileSet.Direction;
+import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
@@ -30,7 +32,7 @@ import java.util.Map;
  *
  * @author Pure_
  */
-public final class InputHandler {
+public final class SimpleInputHandler extends InputHandler {
 
     /**
      * The delay between inputs.
@@ -49,22 +51,17 @@ public final class InputHandler {
     }
 
     /**
-     * The Game object this handler is bound to.
-     */
-    private final Game game;
-    /**
      * The last time user input was recorded.
      */
     private long lastInput = System.currentTimeMillis();
-
 
     /**
      * Constructs a new InputHandler.
      *
      * @param game Game to bind to
      */
-    public InputHandler(Game game) {
-        this.game = game;
+    public SimpleInputHandler(BasicGame game) {
+        super(game);
     }
 
     /**
@@ -83,7 +80,7 @@ public final class InputHandler {
 
         // Resetting the board
         if (input.isKeyDown(Input.KEY_R)) {
-            game.reset();
+            game().reset();
         }
 
         // Display FPS toggle
@@ -92,10 +89,10 @@ public final class InputHandler {
         }
 
         // Performing tile set movement
-        if (game.getTiles().canMove()) {
+        if (game().getTiles().canMove()) {
             for (Map.Entry<Integer, Direction> entry : MOVEMENT_MAP.entrySet()) {
                 if (input.isKeyDown(entry.getKey())) {
-                    game.getTiles().performMove(entry.getValue());
+                    game().getTiles().performMove(entry.getValue());
                     break;
                 }
             }
@@ -103,5 +100,9 @@ public final class InputHandler {
 
         // Resetting the last input time
         lastInput = System.currentTimeMillis();
+    }
+
+    protected Game game() {
+        return (Game) getGame();
     }
 }

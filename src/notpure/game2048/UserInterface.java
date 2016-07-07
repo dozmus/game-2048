@@ -26,7 +26,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * The UserInterface renderer.
  *
- * @author Pure_ <mail@pure2.net>
+ * @author Pure_
  */
 public final class UserInterface {
 

@@ -69,7 +69,7 @@ public final class Game extends BasicGame {
     /**
      * User Input handler.
      */
-    private InputHandler input;
+    private SimpleInputHandler input;
     
     /**
      * The UserInterface renderer.
@@ -107,7 +107,7 @@ public final class Game extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         // Initialises the InputHandler
-        input = new InputHandler(this);
+        input = new SimpleInputHandler(this);
         
         // Initialises the UserInterface renderer
         ui = new UserInterface(this);

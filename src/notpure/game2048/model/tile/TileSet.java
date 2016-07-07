@@ -286,9 +286,9 @@ public final class TileSet {
         }
 
         // Up
-        for (int x = 0; x < width - 1; x--) {
+        for (int x = width - 1; x > 0; x--) {
             for (int y = 0; y < height; y++) {
-                if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
+                if (Tile.canCombine(tiles[y][x - 1], tiles[y][x])) {
                     return true;
                 }
             }
