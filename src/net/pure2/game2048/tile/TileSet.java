@@ -90,13 +90,22 @@ public final class TileSet {
     }
 
     /**
-     * Performs game processing logic, shifts tiles and combines them.
+     * Shifts tiles and combines them in the given direction.
      *
      * @param dir
      */
-    public void process(Direction dir) {
+    private void moveInDirection(Direction dir) {
         shiftTiles(dir);
         combineTiles(dir);
+    }
+
+    /**
+     * Shifts the tile set in the given direction and inserts a random tile.
+     * @param direction
+     */
+    public void performMove(Direction direction) {
+        game.getTiles().moveInDirection(direction);
+        insertSafeRandomTile();
     }
 
     /**
@@ -433,6 +442,19 @@ public final class TileSet {
     }
 
     /**
+     * Attempting to insert a new random tile into the tile set.
+     *
+     * @return success
+     */
+    private boolean insertSafeRandomTile() {
+        if (game.getTiles().hasFreeSlot()) {
+            game.getTiles().insertRandomTile();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Gets the value of the next random tile.
      *
      * @return tile value
@@ -441,12 +463,13 @@ public final class TileSet {
         return rand.nextInt(100) > 30 ? 2 : 4;
     }
 
+
     /**
      * The direction to shift/combine the tiles in.
      *
      * @author Pure_ <mail@pure2.net>
      */
-    public static enum Direction {
+    public enum Direction {
 
         UP, DOWN, LEFT, RIGHT
     }

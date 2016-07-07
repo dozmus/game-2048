@@ -22,6 +22,9 @@ import net.pure2.game2048.tile.TileSet.Direction;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * An InputHandler.
  *
@@ -33,16 +36,27 @@ public final class InputHandler {
      * The delay between inputs.
      */
     private static final long INPUT_DELAY = 100L;
+    /**
+     * A mapping, translating key code (key) to direction (value).
+     */
+    private static final HashMap<Integer, Direction> MOVEMENT_MAP = new HashMap<>();
+
+    static {
+        MOVEMENT_MAP.put(Input.KEY_UP, Direction.UP);
+        MOVEMENT_MAP.put(Input.KEY_DOWN, Direction.DOWN);
+        MOVEMENT_MAP.put(Input.KEY_LEFT, Direction.LEFT);
+        MOVEMENT_MAP.put(Input.KEY_RIGHT, Direction.RIGHT);
+    }
 
     /**
      * The Game object this handler is bound to.
      */
     private final Game game;
-
     /**
      * The last time user input was recorded.
      */
     private long lastInput = System.currentTimeMillis();
+
 
     /**
      * Constructs a new InputHandler.
@@ -63,61 +77,31 @@ public final class InputHandler {
         if (System.currentTimeMillis() - lastInput < INPUT_DELAY) {
             return;
         }
-        
+
         // Fetching the current input state
         Input input = gc.getInput();
-        
+
         // Resetting the board
         if (input.isKeyDown(Input.KEY_R)) {
             game.reset();
         }
-        
+
         // Display FPS toggle
         if (input.isKeyDown(Input.KEY_F)) {
             gc.setShowFPS(!gc.isShowingFPS());
         }
 
-        // Checking if the player can move
+        // Performing tile set movement
         if (game.getTiles().canMove()) {
-            // Up
-            if (input.isKeyDown(Input.KEY_UP)) {
-                game.getTiles().process(Direction.UP);
-                insertRandomTile();
-            }
-
-            // Down
-            if (input.isKeyDown(Input.KEY_DOWN)) {
-                game.getTiles().process(Direction.DOWN);
-                insertRandomTile();
-            }
-
-            // Left
-            if (input.isKeyDown(Input.KEY_LEFT)) {
-                game.getTiles().process(Direction.LEFT);
-                insertRandomTile();
-            }
-
-            // Right
-            if (input.isKeyDown(Input.KEY_RIGHT)) {
-                game.getTiles().process(Direction.RIGHT);
-                insertRandomTile();
+            for (Map.Entry<Integer, Direction> entry : MOVEMENT_MAP.entrySet()) {
+                if (input.isKeyDown(entry.getKey())) {
+                    game.getTiles().performMove(entry.getValue());
+                    break;
+                }
             }
         }
 
         // Resetting the last input time
         lastInput = System.currentTimeMillis();
-    }
-
-    /**
-     * Attempting to insert a new random tile into the tile set.
-     *
-     * @return success
-     */
-    private boolean insertRandomTile() {
-        if (game.getTiles().hasFreeSlot()) {
-            game.getTiles().insertRandomTile();
-            return true;
-        }
-        return false;
     }
 }
