@@ -57,7 +57,7 @@ public final class Tile {
      * @param x position x
      * @param y position y
      * @param width tile width
-     * @param height tile heigt
+     * @param height tile height
      */
     public Tile(int value, int x, int y, int width, int height) {
         this.value = value;

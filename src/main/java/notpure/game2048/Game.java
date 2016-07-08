@@ -36,7 +36,7 @@ import org.newdawn.slick.SlickException;
  */
 public final class Game extends BasicGame {
 
-    private static final String VERSION = "v1.0.2";
+    private static final String VERSION = "v1.0.3";
     private static final String WINDOW_TITLE = "game-2048 (" + VERSION + ")";
 
     /**
@@ -109,7 +109,7 @@ public final class Game extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         // Load tile colours
-        ColourScheme.load(getClass().getResourceAsStream("/notpure/game2048/tile/styles.txt"));
+        ColourScheme.load(getClass().getResourceAsStream("/game2048/notpure/tile/styles.txt"));
 
         // Initialises the InputHandler
         input = new SimpleInputHandler(this);
