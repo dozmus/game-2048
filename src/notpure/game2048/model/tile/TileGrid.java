@@ -19,6 +19,7 @@
 package notpure.game2048.model.tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import notpure.game2048.Game;
 import org.newdawn.slick.Graphics;
@@ -75,18 +76,7 @@ public final class TileGrid {
     }
 
     /**
-     * Sets the tile size.
-     *
-     * @param width tile width
-     * @param height tile height
-     */
-    public void setTileSize(int width, int height) {
-        tileDimensions.setSize(width, height);
-    }
-
-    /**
      * Shifts tiles and combines them in the given direction.
-     *
      * @param dir
      */
     private void moveInDirection(Direction dir) {
@@ -96,105 +86,71 @@ public final class TileGrid {
 
     /**
      * Shifts the tile set in the given direction and inserts a random tile.
-     * @param direction
+     * @param dir
      */
-    public void performMove(Direction direction) {
-        game.getTiles().moveInDirection(direction);
+    public void performMove(Direction dir) {
+        game.getTiles().moveInDirection(dir);
         insertSafeRandomTile();
     }
 
     /**
-     * Performs tile combining in the given direction.
-     *
+     * Attempts to combine tiles in direction.
+     * @return If the combine was successful.
+     */
+    private boolean tryCombineTilesInDirection(int x, int y, int dx, int dy, boolean swapped) {
+        if (Tile.canCombine(tiles[y + dy][x + dx], tiles[y][x])) {
+            tiles[y + dy][x + dx].increaseValue();
+            tiles[y][x].reset();
+
+            tiles[y + dy][x + dx].setCombinedThisTurn(true);
+            tiles[y][x].setCombinedThisTurn(true);
+
+            game.addScore(tiles[y + dy][x + dx].getValue());
+            return true;
+        }
+        return swapped;
+    }
+
+    /**
+     * Performs tile combining in the given direction, roughly an offspring of bubble-sort.
      * @param dir directions to combine tiles in
      */
     private void combineTiles(Direction dir) {
         boolean swapped = true;
 
-        switch (dir) {
-            case UP:
-                while (swapped) {
-                    swapped = false;
+        while (swapped) {
+            swapped = false;
 
+            switch (dir) {
+                case UP:
                     for (int x = width - 1; x > 0; x--) {
                         for (int y = 0; y < height; y++) {
-                            if (Tile.canCombine(tiles[y][x - 1], tiles[y][x])) {
-                                tiles[y][x - 1].increaseValue();
-                                tiles[y][x].reset();
-
-                                tiles[y][x - 1].setCombinedThisTurn(true);
-                                tiles[y][x].setCombinedThisTurn(true);
-
-                                game.addScore(tiles[y][x - 1].getValue());
-                                swapped = true;
-                            }
+                            swapped = tryCombineTilesInDirection(x, y, -1, 0, swapped);
                         }
                     }
-                }
-                break;
-
-            case DOWN:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case DOWN:
                     for (int x = 0; x < width - 1; x++) {
                         for (int y = 0; y < height; y++) {
-                            if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
-                                tiles[y][x + 1].increaseValue();
-                                tiles[y][x].reset();
-
-                                tiles[y][x + 1].setCombinedThisTurn(true);
-                                tiles[y][x].setCombinedThisTurn(true);
-
-                                game.addScore(tiles[y][x + 1].getValue());
-                                swapped = true;
-                            }
+                            swapped = tryCombineTilesInDirection(x, y, 1, 0, swapped);
                         }
                     }
-                }
-                break;
-
-            case RIGHT:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case RIGHT:
                     for (int y = 0; y < height - 1; y++) {
                         for (int x = 0; x < width; x++) {
-                            if (Tile.canCombine(tiles[y + 1][x], tiles[y][x])) {
-                                tiles[y + 1][x].increaseValue();
-                                tiles[y][x].reset();
-
-                                tiles[y + 1][x].setCombinedThisTurn(true);
-                                tiles[y][x].setCombinedThisTurn(true);
-
-                                game.addScore(tiles[y + 1][x].getValue());
-                                swapped = true;
-                            }
+                            swapped = tryCombineTilesInDirection(x, y, 0, 1, swapped);
                         }
                     }
-                }
-                break;
-
-            case LEFT:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case LEFT:
                     for (int y = height - 1; y > 0; y--) {
                         for (int x = 0; x < width; x++) {
-                            if (Tile.canCombine(tiles[y - 1][x], tiles[y][x])) {
-                                tiles[y - 1][x].increaseValue();
-                                tiles[y][x].reset();
-
-                                tiles[y - 1][x].setCombinedThisTurn(true);
-                                tiles[y][x].setCombinedThisTurn(true);
-
-                                game.addScore(tiles[y - 1][x].getValue());
-                                swapped = true;
-                            }
+                            swapped = tryCombineTilesInDirection(x, y, 0, -1, swapped);
                         }
                     }
-                }
-                break;
+                    break;
+            }
         }
         resetCombineFlags();
     }
@@ -207,71 +163,53 @@ public final class TileGrid {
     private void shiftTiles(Direction dir) {
         boolean swapped = true;
 
-        switch (dir) {
-            case UP:
-                while (swapped) {
-                    swapped = false;
+        while (swapped) {
+            swapped = false;
 
+            switch (dir) {
+                case UP:
                     for (int x = width - 1; x > 0; x--) {
                         for (int y = 0; y < height; y++) {
-                            if (!tiles[y][x - 1].isValid() && tiles[y][x].isValid()) {
-                                tiles[y][x - 1].setValue(tiles[y][x].getValue());
-                                tiles[y][x].setValue(-1);
-                                swapped = true;
-                            }
+                            swapped = tryShiftTilesInDirection(x, y, -1, 0, swapped);
                         }
                     }
-                }
-                break;
-
-            case DOWN:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case DOWN:
                     for (int x = 0; x < width - 1; x++) {
                         for (int y = 0; y < height; y++) {
-                            if (!tiles[y][x + 1].isValid() && tiles[y][x].isValid()) {
-                                tiles[y][x + 1].setValue(tiles[y][x].getValue());
-                                tiles[y][x].setValue(-1);
-                                swapped = true;
-                            }
+                            swapped = tryShiftTilesInDirection(x, y, 1, 0, swapped);
                         }
                     }
-                }
-                break;
-
-            case RIGHT:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case RIGHT:
                     for (int y = 0; y < height - 1; y++) {
                         for (int x = 0; x < width; x++) {
-                            if (!tiles[y + 1][x].isValid() && tiles[y][x].isValid()) {
-                                tiles[y + 1][x].setValue(tiles[y][x].getValue());
-                                tiles[y][x].setValue(-1);
-                                swapped = true;
-                            }
+                            swapped = tryShiftTilesInDirection(x, y, 0, 1, swapped);
                         }
                     }
-                }
-                break;
-
-            case LEFT:
-                while (swapped) {
-                    swapped = false;
-
+                    break;
+                case LEFT:
                     for (int y = height - 1; y > 0; y--) {
                         for (int x = 0; x < width; x++) {
-                            if (!tiles[y - 1][x].isValid() && tiles[y][x].isValid()) {
-                                tiles[y - 1][x].setValue(tiles[y][x].getValue());
-                                tiles[y][x].setValue(-1);
-                                swapped = true;
-                            }
+                            swapped = tryShiftTilesInDirection(x, y, 0, -1, swapped);
                         }
                     }
-                }
-                break;
+                    break;
+            }
         }
+    }
+
+    /**
+     * Attempts to shift tiles in direction.
+     * @return
+     */
+    private boolean tryShiftTilesInDirection(int x, int y, int dx, int dy, boolean swapped) {
+        if (!tiles[y + dy][x + dx].isValid() && tiles[y][x].isValid()) {
+            tiles[y + dy][x + dx].setValue(tiles[y][x].getValue());
+            tiles[y][x].setValue(-1);
+            return true;
+        }
+        return swapped;
     }
 
     /**
@@ -279,22 +217,13 @@ public final class TileGrid {
      *
      * @return whether or not a move can be made
      */
-    public boolean canMove() {
+    public boolean hasMoves() {
         // Checking if a free slot exists (and thus another move can be made)
         if (hasFreeSlot()) {
             return true;
         }
 
-        // Up
-        for (int x = width - 1; x > 0; x--) {
-            for (int y = 0; y < height; y++) {
-                if (Tile.canCombine(tiles[y][x - 1], tiles[y][x])) {
-                    return true;
-                }
-            }
-        }
-
-        // Down
+        // Up/Down directions
         for (int x = 0; x < width - 1; x++) {
             for (int y = 0; y < height; y++) {
                 if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
@@ -303,19 +232,10 @@ public final class TileGrid {
             }
         }
 
-        // Right
+        // Left/Right directions
         for (int y = 0; y < height - 1; y++) {
             for (int x = 0; x < width; x++) {
                 if (Tile.canCombine(tiles[y + 1][x], tiles[y][x])) {
-                    return true;
-                }
-            }
-        }
-
-        // Left
-        for (int y = height - 1; y > 0; y--) {
-            for (int x = 0; x < width; x++) {
-                if (Tile.canCombine(tiles[y - 1][x], tiles[y][x])) {
                     return true;
                 }
             }
@@ -329,27 +249,27 @@ public final class TileGrid {
      * @param g
      */
     public void render(Graphics g) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                tiles[y][x].render(g);
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                tiles[row][col].render(g);
             }
         }
     }
 
     /**
-     * Populates the TileSet with empty tiles.
+     * Resets the TileSet to contain only empty tiles.
      */
-    public void populate() {
-        int offsetY = 0;
-        int offsetX = 0;
+    public void reset() {
+        int rowOffset = 0;
+        int colOffset = 0;
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                tiles[y][x] = new Tile(offsetY, offsetX, tileDimensions);
-                offsetX += tileDimensions.getWidth();
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                tiles[row][col] = new Tile(rowOffset, colOffset, tileDimensions);
+                colOffset += tileDimensions.getWidth();
             }
-            offsetX = 0;
-            offsetY += tileDimensions.getHeight();
+            colOffset = 0;
+            rowOffset += tileDimensions.getHeight();
         }
     }
 
@@ -357,9 +277,9 @@ public final class TileGrid {
      * Resets the combined turn flags of all tiles.
      */
     private void resetCombineFlags() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                tiles[y][x].setCombinedThisTurn(false);
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                tiles[row][col].setCombinedThisTurn(false);
             }
         }
     }
@@ -371,9 +291,9 @@ public final class TileGrid {
      * @return whether or not the tile value appears
      */
     public boolean hasTile(int value) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (tiles[y][x].getValue() == value) {
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (tiles[row][col].getValue() == value) {
                     return true;
                 }
             }
@@ -392,40 +312,27 @@ public final class TileGrid {
 
     /**
      * Gets the amount of free slots on the tile.
-     *
      * @return free slots
      */
     public int freeSlots() {
-        int count = 0;
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (tiles[y][x].getValue() == -1) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return getFreeTiles().length;
     }
 
     /**
      * Gets the free tiles.
-     *
      * @return free tiles
      */
     public Tile[] getFreeTiles() {
-        Tile[] freeTiles = new Tile[freeSlots()];
-        int index = 0;
+        ArrayList<Tile> freeTiles = new ArrayList<>();
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (tiles[y][x].getValue() == -1) {
-                    freeTiles[index] = tiles[y][x];
-                    index++;
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (tiles[row][col].getValue() == -1) {
+                    freeTiles.add(tiles[row][col]);
                 }
             }
         }
-        return freeTiles;
+        return freeTiles.toArray(new Tile[freeTiles.size()]);
     }
 
     /**
@@ -433,12 +340,12 @@ public final class TileGrid {
      */
     public void insertRandomTile() {
         Tile[] tiles = getFreeTiles();
-        tiles[RANDOM.nextInt(tiles.length)].setValue(getRandomTileValue());
+        int randomIdx = RANDOM.nextInt(tiles.length);
+        tiles[randomIdx].setValue(randomTileValue());
     }
 
     /**
      * Attempting to insert a new random tile into the tile set.
-     *
      * @return success
      */
     private boolean insertSafeRandomTile() {
@@ -451,10 +358,9 @@ public final class TileGrid {
 
     /**
      * Gets the value of the next random tile.
-     *
      * @return tile value
      */
-    private int getRandomTileValue() {
+    private int randomTileValue() {
         return RANDOM.nextInt(100) > 30 ? 2 : 4;
     }
 

@@ -89,7 +89,7 @@ public final class SimpleInputHandler extends InputHandler {
         }
 
         // Performing tile set movement
-        if (game().getTiles().canMove()) {
+        if (game().getTiles().hasMoves()) {
             for (Map.Entry<Integer, Direction> entry : MOVEMENT_MAP.entrySet()) {
                 if (input.isKeyDown(entry.getKey())) {
                     game().getTiles().performMove(entry.getValue());

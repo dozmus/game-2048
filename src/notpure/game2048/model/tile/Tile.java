@@ -18,6 +18,7 @@
 
 package notpure.game2048.model.tile;
 
+import notpure.game2048.model.ColourScheme;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -136,13 +137,13 @@ public final class Tile {
      */
     public void render(Graphics g) {
         // Drawing the tile
-        g.setColor(colours[TileColours.TILE_COLOUR_IDX]);
+        g.setColor(colours[ColourScheme.TILE_COLOUR_IDX]);
         g.fill(new RoundedRectangle((int)position.getX() + 1, (int)position.getY() + 1,
                 (int)size.getWidth(), (int)size.getHeight(), 8));
 
         // Drawing the tile value, if the tile is valid
         if (value != -1) {
-            g.setColor(colours[TileColours.TEXT_COLOUR_IDX]);
+            g.setColor(colours[ColourScheme.TEXT_COLOUR_IDX]);
             g.drawString(Integer.toString(value), valueRenderPosX, valueRenderPosY);
         }
     }
@@ -151,14 +152,14 @@ public final class Tile {
      * Sets this tiles colours.
      */
     private void updateColour() {
-        colours = TileColours.getColourScheme(value);
+        colours = ColourScheme.getColourScheme(value);
     }
 
     /**
      * Calculates this tiles value render position.
      */
     private void updateRenderPosition() {
-        valueRenderPosX = (int)position.getX() + (int)size.getWidth() / 2 - Integer.toString(value).length() * 3;
+        valueRenderPosX = (int)position.getX() + (int)size.getWidth() / 2 - Integer.toString(value).length() * 3; // XXX find length based on g.getfont
         valueRenderPosY = (int)position.getY() + (int)size.getHeight() / 2 - 8;
     }
     
@@ -181,6 +182,6 @@ public final class Tile {
      * @return whether or not they can be combined
      */
     public static boolean canCombine(Tile tile1, Tile tile2) {
-        return tile1.isValid() && tile1.getValue() != 1024 && tile1.equals(tile2);
+        return tile1.isValid() && tile1.equals(tile2);
     }
 }

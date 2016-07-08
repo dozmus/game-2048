@@ -18,6 +18,7 @@
 
 package notpure.game2048;
 
+import notpure.game2048.model.ColourScheme;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -51,7 +52,7 @@ public final class UserInterface {
      * @param g
      */
     public void renderBackground(GameContainer gc, Graphics g) {
-        g.setColor(new Color(209, 213, 255));
+        g.setColor(ColourScheme.getBackgroundColor());
         g.fill(new Rectangle(0, 0, gc.getWidth(), gc.getHeight()));
     }
 
@@ -64,7 +65,7 @@ public final class UserInterface {
     public void renderScore(Graphics g, boolean showingFps) {
         int y = showingFps ? 30 : 5;
 
-        g.setColor(Color.white);
+        g.setColor(ColourScheme.getScoreTextColor());
         g.drawString("Score: " + game.getScore(), 8, y);
         g.drawString("Best Score: " + game.getBestScore(), 8, y + 20);
     }

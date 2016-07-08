@@ -1,16 +1,25 @@
-# Syntax: Value = [tile colour] [text colour]
-# Colour Syntax: (r,g,b)
-# value -1 corresponds to the null tile
+# Format information
+# Comment lines start with #
+# Colours are denoted by `(r,g,b)` or `rgb(r,g,b)`
 
--1 = (209,213,255) (0,0,0)
-2 = (152,216,250) (0,0,0)
-4 = (126,208,252) (0,0,0)
-8 = (84,195,255) (38,34,168)
-16 = (46,183,255) (181,247,189)
-32 = (0,166,255) (43,46,224)
-64 = (9,126,189) (59,212,209)
-128 = (7,95,143) (234,235,232)
-256 = (50,100,128) (220,220,230)
-512 = (181,126,222) (240,223,93)
-1024 = (159,63,232) (66,12,133)
-2048 = (144,0,255) (34,240,64)
+# The colour of the background of the tile grid
+BackgroundColor = rgb(209,213,255)
+
+# The colour of the score text
+ScoreTextColor = rgb(255,255,255)
+
+# The colours of the values displayed on tiles
+# Syntax: `[Value] [BackgroundColor] [TextColor]`
+# Note: -1 corresponds to `no` tile (i.e. a tile with no value)
+TileTextColor = -1 rgb(209,213,255) rgb(0,0,0)
+TileTextColor = 2 rgb(152,216,250) rgb(0,0,0)
+TileTextColor = 4 rgb(126,208,252) rgb(0,0,0)
+TileTextColor = 8 rgb(84,195,255) rgb(38,34,168)
+TileTextColor = 16 rgb(46,183,255) rgb(181,247,189)
+TileTextColor = 32 rgb(0,166,255) rgb(43,46,224)
+TileTextColor = 64 rgb(9,126,189) rgb(59,212,209)
+TileTextColor = 128 rgb(7,95,143) rgb(234,235,232)
+TileTextColor = 256 rgb(50,100,128) rgb(220,220,230)
+TileTextColor = 512 rgb(181,126,222) rgb(240,223,93)
+TileTextColor = 1024 rgb(159,63,232) rgb(66,12,133)
+TileTextColor = 2048 rgb(144,0,255) rgb(34,240,64)

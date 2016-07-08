@@ -20,7 +20,7 @@ package notpure.game2048;
 
 import java.io.File;
 
-import notpure.game2048.model.tile.TileColours;
+import notpure.game2048.model.ColourScheme;
 import notpure.game2048.model.tile.TileGrid;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
@@ -109,7 +109,7 @@ public final class Game extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         // Load tile colours
-        TileColours.load(getClass().getResourceAsStream("/notpure/game2048/tile/styles.txt"));
+        ColourScheme.load(getClass().getResourceAsStream("/notpure/game2048/tile/styles.txt"));
 
         // Initialises the InputHandler
         input = new SimpleInputHandler(this);
@@ -119,7 +119,7 @@ public final class Game extends BasicGame {
 
         // Initialises and creates the tile set
         tiles = new TileGrid(this, 4, 4);
-        tiles.populate();
+        tiles.reset();
         tiles.insertRandomTile();
     }
 
@@ -155,7 +155,7 @@ public final class Game extends BasicGame {
         ui.renderScore(g, gc.isShowingFPS());
         
         // Rendering the game over text
-        if (!tiles.canMove()) {
+        if (!tiles.hasMoves()) {
             ui.renderGameOverText(g);
         }
     }
@@ -171,7 +171,7 @@ public final class Game extends BasicGame {
         
         // Resetting the game state
         setScore(0);
-        getTiles().populate();
+        getTiles().reset();
         getTiles().insertRandomTile();
     }
 
