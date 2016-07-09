@@ -220,8 +220,8 @@ public final class TileGrid {
         }
 
         // Up/Down directions
-        for (int x = 0; x < rows - 1; x++) {
-            for (int y = 0; y < cols; y++) {
+        for (int x = 0; x < cols - 1; x++) {
+            for (int y = 0; y < rows; y++) {
                 if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
                     return true;
                 }
@@ -229,8 +229,8 @@ public final class TileGrid {
         }
 
         // Left/Right directions
-        for (int y = 0; y < cols - 1; y++) {
-            for (int x = 0; x < rows; x++) {
+        for (int y = 0; y < rows - 1; y++) {
+            for (int x = 0; x < cols; x++) {
                 if (Tile.canCombine(tiles[y + 1][x], tiles[y][x])) {
                     return true;
                 }
