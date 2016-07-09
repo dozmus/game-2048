@@ -25,11 +25,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * The UserInterface renderer.
+ * The game renderer.
  *
  * @author Pure_
  */
-public final class UserInterface {
+public final class GameRenderer {
 
     /**
      * {@link Game} instance this UserInterface is bound to.
@@ -41,7 +41,7 @@ public final class UserInterface {
      *
      * @param game Game to bind to
      */
-    public UserInterface(Game game) {
+    public GameRenderer(Game game) {
         this.game = game;
     }
 

@@ -47,14 +47,14 @@ public final class TileGrid {
     private final Tile[][] tiles;
     
     /**
-     * The tile array width.
+     * The tile array rows.
      */
-    private final int width;
+    private final int rows;
     
     /**
-     * The tile array height.
+     * The tile array columns.
      */
-    private final int height;
+    private final int cols;
 
     /**
      * The dimensions of a single tile.
@@ -63,16 +63,12 @@ public final class TileGrid {
 
     /**
      * Creates a new TileSet.
-     *
-     * @param game Game to attach to
-     * @param width tiles width (amount of tiles, x)
-     * @param height tiles height(amount of tiles, y)
      */
-    public TileGrid(Game game, int width, int height) {
+    public TileGrid(Game game, int rows, int cols) {
         this.game = game;
-        this.width = width;
-        this.height = height;
-        tiles = new Tile[height][width];
+        this.rows = rows;
+        this.cols = cols;
+        tiles = new Tile[rows][cols];
     }
 
     /**
@@ -123,29 +119,29 @@ public final class TileGrid {
 
             switch (dir) {
                 case UP:
-                    for (int x = width - 1; x > 0; x--) {
-                        for (int y = 0; y < height; y++) {
+                    for (int x = cols - 1; x > 0; x--) {
+                        for (int y = 0; y < rows; y++) {
                             swapped = tryCombineTilesInDirection(x, y, -1, 0, swapped);
                         }
                     }
                     break;
                 case DOWN:
-                    for (int x = 0; x < width - 1; x++) {
-                        for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < cols - 1; x++) {
+                        for (int y = 0; y < rows; y++) {
                             swapped = tryCombineTilesInDirection(x, y, 1, 0, swapped);
                         }
                     }
                     break;
                 case RIGHT:
-                    for (int y = 0; y < height - 1; y++) {
-                        for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < rows - 1; y++) {
+                        for (int x = 0; x < cols; x++) {
                             swapped = tryCombineTilesInDirection(x, y, 0, 1, swapped);
                         }
                     }
                     break;
                 case LEFT:
-                    for (int y = height - 1; y > 0; y--) {
-                        for (int x = 0; x < width; x++) {
+                    for (int y = rows - 1; y > 0; y--) {
+                        for (int x = 0; x < cols; x++) {
                             swapped = tryCombineTilesInDirection(x, y, 0, -1, swapped);
                         }
                     }
@@ -168,29 +164,29 @@ public final class TileGrid {
 
             switch (dir) {
                 case UP:
-                    for (int x = width - 1; x > 0; x--) {
-                        for (int y = 0; y < height; y++) {
+                    for (int x = cols - 1; x > 0; x--) {
+                        for (int y = 0; y < rows; y++) {
                             swapped = tryShiftTilesInDirection(x, y, -1, 0, swapped);
                         }
                     }
                     break;
                 case DOWN:
-                    for (int x = 0; x < width - 1; x++) {
-                        for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < cols - 1; x++) {
+                        for (int y = 0; y < rows; y++) {
                             swapped = tryShiftTilesInDirection(x, y, 1, 0, swapped);
                         }
                     }
                     break;
                 case RIGHT:
-                    for (int y = 0; y < height - 1; y++) {
-                        for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < rows - 1; y++) {
+                        for (int x = 0; x < cols; x++) {
                             swapped = tryShiftTilesInDirection(x, y, 0, 1, swapped);
                         }
                     }
                     break;
                 case LEFT:
-                    for (int y = height - 1; y > 0; y--) {
-                        for (int x = 0; x < width; x++) {
+                    for (int y = rows - 1; y > 0; y--) {
+                        for (int x = 0; x < cols; x++) {
                             swapped = tryShiftTilesInDirection(x, y, 0, -1, swapped);
                         }
                     }
@@ -224,8 +220,8 @@ public final class TileGrid {
         }
 
         // Up/Down directions
-        for (int x = 0; x < width - 1; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 0; x < rows - 1; x++) {
+            for (int y = 0; y < cols; y++) {
                 if (Tile.canCombine(tiles[y][x + 1], tiles[y][x])) {
                     return true;
                 }
@@ -233,8 +229,8 @@ public final class TileGrid {
         }
 
         // Left/Right directions
-        for (int y = 0; y < height - 1; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < cols - 1; y++) {
+            for (int x = 0; x < rows; x++) {
                 if (Tile.canCombine(tiles[y + 1][x], tiles[y][x])) {
                     return true;
                 }
@@ -249,8 +245,8 @@ public final class TileGrid {
      * @param g
      */
     public void render(Graphics g) {
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 tiles[row][col].render(g);
             }
         }
@@ -263,8 +259,8 @@ public final class TileGrid {
         int rowOffset = 0;
         int colOffset = 0;
 
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 tiles[row][col] = new Tile(rowOffset, colOffset, tileDimensions);
                 colOffset += tileDimensions.getWidth();
             }
@@ -277,8 +273,8 @@ public final class TileGrid {
      * Resets the combined turn flags of all tiles.
      */
     private void resetCombineFlags() {
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 tiles[row][col].setCombinedThisTurn(false);
             }
         }
@@ -291,14 +287,22 @@ public final class TileGrid {
      * @return whether or not the tile value appears
      */
     public boolean hasTile(int value) {
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 if (tiles[row][col].getValue() == value) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    /**
+     * Gets the {@link Dimension} of a single {@link Tile}.
+     * @return
+     */
+    public Dimension getTileDimensions() {
+        return tileDimensions;
     }
 
     /**
@@ -325,8 +329,8 @@ public final class TileGrid {
     public Tile[] getFreeTiles() {
         ArrayList<Tile> freeTiles = new ArrayList<>();
 
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 if (tiles[row][col].getValue() == -1) {
                     freeTiles.add(tiles[row][col]);
                 }
@@ -362,6 +366,14 @@ public final class TileGrid {
      */
     private int randomTileValue() {
         return RANDOM.nextInt(100) > 30 ? 2 : 4;
+    }
+
+    /**
+     * Gets the dimension of the game view port.
+     * @return
+     */
+    public Dimension getGameDimensions() {
+        return new Dimension((int)(rows * tileDimensions.getWidth()), (int)(cols * tileDimensions.getHeight()));
     }
 
 
