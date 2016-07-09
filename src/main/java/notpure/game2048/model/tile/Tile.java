@@ -1,6 +1,6 @@
 /*
  * A clone of the popular 2048 game.
- * Copyright (C) 2016 Pure
+ * Copyright (C) 2016 Pure <https://github.com/purecs>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import java.awt.*;
 /**
  * A game tile.
  *
- * @author Pure_
+ * @author Pure <https://github.com/purecs>
  */
 public final class Tile {
 
@@ -42,21 +42,22 @@ public final class Tile {
 
     /**
      * Constructs a new Tile and calculates related information, the value is set to -1.
+     *
      * @param x
      * @param y
      * @param size
      */
     public Tile(int x, int y, Dimension size) {
-        this(-1, x, y, (int)size.getWidth(), (int)size.getHeight());
+        this(-1, x, y, (int) size.getWidth(), (int) size.getHeight());
     }
 
     /**
      * Constructs a new Tile and calculates related information.
      *
-     * @param value tile value
-     * @param x position x
-     * @param y position y
-     * @param width tile width
+     * @param value  tile value
+     * @param x      position x
+     * @param y      position y
+     * @param width  tile width
      * @param height tile height
      */
     public Tile(int value, int x, int y, int width, int height) {
@@ -66,12 +67,32 @@ public final class Tile {
         updateColour();
         updateRenderPosition();
     }
-    
+
+    /**
+     * Checks if two tiles can be combined.
+     *
+     * @param tile1
+     * @param tile2
+     * @return whether or not they can be combined
+     */
+    public static boolean canCombine(Tile tile1, Tile tile2) {
+        return tile1.isValid() && tile1.equals(tile2);
+    }
+
     /**
      * Increases the value of this tile.
      */
     public void increaseValue() {
         setValue(value * 2);
+    }
+
+    /**
+     * Gets this tiles value.
+     *
+     * @return value
+     */
+    public int getValue() {
+        return value;
     }
 
     /**
@@ -86,18 +107,9 @@ public final class Tile {
     }
 
     /**
-     * Gets this tiles value.
-     *
-     * @return value
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /**
      * Sets whether or not this tile was combined this turn.
-     * 
-     * @param combinedThisTurn 
+     *
+     * @param combinedThisTurn
      */
     public void setCombinedThisTurn(boolean combinedThisTurn) {
         this.combinedThisTurn = combinedThisTurn;
@@ -105,22 +117,22 @@ public final class Tile {
 
     /**
      * Gets whether or not this tile was combined this turn.
-     * 
+     *
      * @return combined this turn
      */
     public boolean wasCombinedThisTurn() {
         return combinedThisTurn;
     }
-    
+
     /**
      * Checks whether or not this tile is valid.
-     * 
+     *
      * @return tile is valid
      */
     public boolean isValid() {
         return value != -1;
     }
-   
+
     /**
      * Resets the value of this tile.
      */
@@ -138,8 +150,8 @@ public final class Tile {
     public void render(Graphics g) {
         // Drawing the tile
         g.setColor(colours[ColourScheme.TILE_COLOUR_IDX]);
-        g.fill(new RoundedRectangle((int)position.getX() + 1, (int)position.getY() + 1,
-                (int)size.getWidth(), (int)size.getHeight(), 8));
+        g.fill(new RoundedRectangle((int) position.getX() + 1, (int) position.getY() + 1,
+                (int) size.getWidth(), (int) size.getHeight(), 8));
 
         // Drawing the tile value, if the tile is valid
         if (value != -1) {
@@ -159,29 +171,18 @@ public final class Tile {
      * Calculates this tiles value render position.
      */
     private void updateRenderPosition() {
-        valueRenderPosX = (int)position.getX() + (int)size.getWidth() / 2 - Integer.toString(value).length() * 3; // XXX find length based on g.getfont
-        valueRenderPosY = (int)position.getY() + (int)size.getHeight() / 2 - 8;
+        valueRenderPosX = (int) position.getX() + (int) size.getWidth() / 2 - Integer.toString(value).length() * 3; // XXX find length based on g.getfont
+        valueRenderPosY = (int) position.getY() + (int) size.getHeight() / 2 - 8;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Tile) {
             Tile tile = (Tile) obj;
-            
+
             return tile.getValue() == value
                     && tile.wasCombinedThisTurn() == combinedThisTurn;
         }
         return false;
-    }
-    
-    /**
-     * Checks if two tiles can be combined.
-     * 
-     * @param tile1
-     * @param tile2
-     * @return whether or not they can be combined
-     */
-    public static boolean canCombine(Tile tile1, Tile tile2) {
-        return tile1.isValid() && tile1.equals(tile2);
     }
 }

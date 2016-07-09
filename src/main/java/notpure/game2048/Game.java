@@ -1,6 +1,6 @@
 /*
  * A clone of the popular 2048 game.
- * Copyright (C) 2016 Pure
+ * Copyright (C) 2016 Pure <https://github.com/purecs>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,21 @@
 
 package notpure.game2048;
 
-import java.awt.*;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import notpure.game2048.model.ColourScheme;
 import notpure.game2048.model.tile.TileGrid;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 
+import java.awt.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Application main class.
  *
- * @author Pure_
+ * @author Pure <https://github.com/purecs>
  */
 public final class Game extends BasicGame {
 
@@ -52,7 +52,7 @@ public final class Game extends BasicGame {
 
     /**
      * The application entry-point, initialises and starts the game.
-     * 
+     *
      * @param args the command line arguments
      * @throws org.newdawn.slick.SlickException
      */
@@ -63,7 +63,7 @@ public final class Game extends BasicGame {
                         LWJGLUtil.getPlatformName()).getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath",
                 System.getProperty("org.lwjgl.librarypath"));
-        
+
         // Creating a game container
         AppGameContainer gc = new AppGameContainer(new Game());
 
@@ -112,7 +112,7 @@ public final class Game extends BasicGame {
 
         // Load tile colours
         ColourScheme.load(getClass().getResourceAsStream("/game2048/notpure/tile/styles.txt"));
-        
+
         // Initialises the renderer
         gameRenderer = new GameRenderer(this);
 
@@ -123,7 +123,7 @@ public final class Game extends BasicGame {
 
         // Update game size
         Dimension gameDimension = tiles.getGameDimensions();
-        ((AppGameContainer)gc).setDisplayMode((int)gameDimension.getWidth(), (int)gameDimension.getHeight(), false);
+        ((AppGameContainer) gc).setDisplayMode((int) gameDimension.getWidth(), (int) gameDimension.getHeight(), false);
     }
 
     @Override
@@ -138,13 +138,13 @@ public final class Game extends BasicGame {
     public void render(GameContainer gc, Graphics g) throws SlickException {
         // Game background
         gameRenderer.renderBackground(gc, g);
-        
+
         // Renders the tile set
         tiles.render(g);
 
         // Rendering the player score
         gameRenderer.renderScore(g, gc.isShowingFPS());
-        
+
         // Rendering the game over text
         if (!tiles.hasMoves()) {
             gameRenderer.renderGameOverText(g);
@@ -185,7 +185,7 @@ public final class Game extends BasicGame {
         if (score > bestScore) {
             bestScore = score;
         }
-        
+
         // Resetting the game state
         setScore(0);
         getTiles().reset();
@@ -200,10 +200,10 @@ public final class Game extends BasicGame {
     public TileGrid getTiles() {
         return tiles;
     }
-    
+
     /**
      * Gets the current score.
-     * 
+     *
      * @return score
      */
     public int getScore() {
@@ -227,10 +227,10 @@ public final class Game extends BasicGame {
     public void addScore(int score) {
         this.score += score;
     }
-    
+
     /**
      * Gets the current best score.
-     * 
+     *
      * @return best score
      */
     public int getBestScore() {

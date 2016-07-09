@@ -5,7 +5,7 @@ Another clone of the popular [2048 game](http://gabrielecirulli.github.io/2048/)
 
 #### Usage
 You can either compile the source code yourself or download the
-lastest [release](https://github.com/PureCS/game-2048/releases).
+latest [release](https://github.com/PureCS/game-2048/releases).
 You will then just need to execute the game JAR in the archive.
 Example: `java -jar game-2048.jar`
 

@@ -1,6 +1,6 @@
 /*
  * A clone of the popular 2048 game.
- * Copyright (C) 2016 Pure
+ * Copyright (C) 2016 Pure <https://github.com/purecs>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ import java.util.Scanner;
 
 /**
  * Loads the colour scheme of the game from a resource file.
- * @author Pure_
+ *
+ * @author Pure <https://github.com/purecs>
  */
 public final class ColourScheme {
 
@@ -72,7 +73,7 @@ public final class ColourScheme {
         String key = parts[0].trim();
         String value = parts[1].trim();
 
-        switch(key) {
+        switch (key) {
             case "BackgroundColor":
                 BACKGROUND_COLOR = parseColor(value);
                 break;
@@ -84,7 +85,7 @@ public final class ColourScheme {
                 int tileValue = Integer.parseInt(values[0]);
 
                 // Insert into map
-                COLOURS.put(tileValue, new Color[] {
+                COLOURS.put(tileValue, new Color[]{
                         parseColor(values[1]),
                         parseColor(values[2])
                 });

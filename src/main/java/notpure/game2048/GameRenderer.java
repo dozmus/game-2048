@@ -1,6 +1,6 @@
 /*
  * A clone of the popular 2048 game.
- * Copyright (C) 2016 Pure
+ * Copyright (C) 2016 Pure <https://github.com/purecs>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * The game renderer.
  *
- * @author Pure_
+ * @author Pure <https://github.com/purecs>
  */
 public final class GameRenderer {
 

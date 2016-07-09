@@ -1,6 +1,6 @@
 /*
  * A clone of the popular 2048 game.
- * Copyright (C) 2016 Pure
+ * Copyright (C) 2016 Pure <https://github.com/purecs>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,17 @@
 
 package notpure.game2048.model.tile;
 
+import notpure.game2048.Game;
+import org.newdawn.slick.Graphics;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-import notpure.game2048.Game;
-import org.newdawn.slick.Graphics;
 
 /**
  * A TileSet.
  *
- * @author Pure_
+ * @author Pure <https://github.com/purecs>
  */
 public final class TileGrid {
 
@@ -35,22 +36,22 @@ public final class TileGrid {
      * Random number generator.
      */
     private static final Random RANDOM = new Random();
-    
+
     /**
      * The Game this TileSet is bound to.
      */
     private final Game game;
-    
+
     /**
      * The tiles.
      */
     private final Tile[][] tiles;
-    
+
     /**
      * The tile array rows.
      */
     private final int rows;
-    
+
     /**
      * The tile array columns.
      */
@@ -73,6 +74,7 @@ public final class TileGrid {
 
     /**
      * Shifts tiles and combines them in the given direction.
+     *
      * @param dir
      */
     private void moveInDirection(Direction dir) {
@@ -82,6 +84,7 @@ public final class TileGrid {
 
     /**
      * Shifts the tile set in the given direction and inserts a random tile.
+     *
      * @param dir
      */
     public void performMove(Direction dir) {
@@ -91,6 +94,7 @@ public final class TileGrid {
 
     /**
      * Attempts to combine tiles in direction.
+     *
      * @return If the combine was successful.
      */
     private boolean tryCombineTilesInDirection(int x, int y, int dx, int dy, boolean swapped) {
@@ -109,6 +113,7 @@ public final class TileGrid {
 
     /**
      * Performs tile combining in the given direction, roughly an offspring of bubble-sort.
+     *
      * @param dir directions to combine tiles in
      */
     private void combineTiles(Direction dir) {
@@ -197,6 +202,7 @@ public final class TileGrid {
 
     /**
      * Attempts to shift tiles in direction.
+     *
      * @return
      */
     private boolean tryShiftTilesInDirection(int x, int y, int dx, int dy, boolean swapped) {
@@ -299,6 +305,7 @@ public final class TileGrid {
 
     /**
      * Gets the {@link Dimension} of a single {@link Tile}.
+     *
      * @return
      */
     public Dimension getTileDimensions() {
@@ -316,6 +323,7 @@ public final class TileGrid {
 
     /**
      * Gets the amount of free slots on the tile.
+     *
      * @return free slots
      */
     public int freeSlots() {
@@ -324,6 +332,7 @@ public final class TileGrid {
 
     /**
      * Gets the free tiles.
+     *
      * @return free tiles
      */
     public Tile[] getFreeTiles() {
@@ -350,6 +359,7 @@ public final class TileGrid {
 
     /**
      * Attempting to insert a new random tile into the tile set.
+     *
      * @return success
      */
     private boolean insertSafeRandomTile() {
@@ -362,6 +372,7 @@ public final class TileGrid {
 
     /**
      * Gets the value of the next random tile.
+     *
      * @return tile value
      */
     private int randomTileValue() {
@@ -370,10 +381,11 @@ public final class TileGrid {
 
     /**
      * Gets the dimension of the game view port.
+     *
      * @return
      */
     public Dimension getGameDimensions() {
-        return new Dimension((int)(rows * tileDimensions.getWidth()), (int)(cols * tileDimensions.getHeight()));
+        return new Dimension((int) (rows * tileDimensions.getWidth()), (int) (cols * tileDimensions.getHeight()));
     }
 
 
