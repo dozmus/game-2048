@@ -16,7 +16,7 @@ Example: `java -jar game-2048.jar`
 
 ### Customisation
 * Tile size: Modify [`TileGrid#tileDimensions`](src/main/java/notpure/game2048/model/tile/TileGrid.java)
-* Tile colors/score text color/background color: Modify [`styles.txt`](src/main/resources/game2048/notpure/tile/styles.txt)
+* Tile colors/score text color/background color: Modify [`styles.txt`](src/main/resources/notpure/game2048/model/styles.txt)
 * Tile count: Modify `tiles = new TileGrid(this, 4, 4)` in [`Game#init(GameContainer)`](src/main/java/notpure/game2048/Game.java)
 
 ### Compatibility

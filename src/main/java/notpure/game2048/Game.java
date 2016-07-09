@@ -111,7 +111,7 @@ public final class Game extends BasicGame {
         this.gc = gc;
 
         // Load tile colours
-        ColourScheme.load(getClass().getResourceAsStream("/game2048/notpure/tile/styles.txt"));
+        ColourScheme.load(getClass().getResourceAsStream("/notpure/game2048/model/styles.txt"));
 
         // Initialises the renderer
         gameRenderer = new GameRenderer(this);
